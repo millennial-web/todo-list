@@ -1,0 +1,9 @@
+html,
+body{
+    background: linear-gradient(
+        -95deg,
+        steelblue,
+        aquamarine
+    );
+    background-size: 100% 100%;
+}
