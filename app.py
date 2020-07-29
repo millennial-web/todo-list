@@ -1,18 +1,11 @@
-# import pandas as pd
-# from sqlalchemy import create_engine
-# datos = pd.DataFrame({
-#     "tipo":["super","tarea"],
-#     "desc":["leche","estudiar"]
-# })
-# # datos = pd.read_csv("archivo.csv")
-# engine = create_engine("postgresql+psycopg2://postgres:gs@/todo_list")
-# datos.to_sql("todo", if_exists="append", index=False, con=engine)
-# engine.dispose()
 from flask import Flask, render_template, request
 from sqlalchemy import create_engine
 import pandas as pd
+import os
 
 app = Flask(__name__)
+
+engine_string = os.environ.get('DATABASE_URL', '')
 
 @app.route("/")
 def main():
@@ -29,7 +22,7 @@ def consultar(buscarTipo):
     else:
         query = "select * from todo where tipo='tarea'"
 
-    engine = create_engine("postgresql+psycopg2://postgres:gs@/todo_list")
+    engine = create_engine(engine_string)
     datos = pd.read_sql(query, engine)
     engine.dispose()
 
@@ -45,7 +38,7 @@ def insert():
         "desc": miJSON["texto"]
     }, index=[0])
 
-    engine = create_engine("postgresql+psycopg2://postgres:gs@/todo_list")
+    engine = create_engine(engine_string)
     datos.to_sql("todo", if_exists="append", index=False, con=engine)
     engine.dispose()
 
