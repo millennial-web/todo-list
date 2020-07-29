@@ -33,8 +33,13 @@ def consultar(buscarTipo):
 def insert():
     miJSON = request.json
 
+    if( miJSON["tipo"] == 1){
+        tipo = "super"
+     }else{
+        tipo = "tarea"
+     } 
     datos = pd.DataFrame({
-        "tipo": (miJSON["tipo"] == 1)? "super" : "tarea",
+        "tipo": tipo,
         "desc": miJSON["texto"]
     }, index=[0])
 
