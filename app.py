@@ -34,7 +34,7 @@ def insert():
     miJSON = request.json
 
     datos = pd.DataFrame({
-        "tipo": "super" if miJSON["tipo"]==1 else "tarea",
+        "tipo": (miJSON["tipo"] == 1)? "super" : "tarea",
         "desc": miJSON["texto"]
     }, index=[0])
 
